@@ -21,7 +21,7 @@ sed -i "s|_TINYPROXY_PORT_|$TINYPROXY_PORT|g" '/nftables.rules'
 sed -i "s|_SAB_PORT_A_|$SAB_PORT_A|g" '/nftables.rules'
 sed -i "s|_SAB_PORT_B_|$SAB_PORT_B|g" '/nftables.rules'
 sed -i "s|_HYDRA_PORT_|$HYDRA_PORT|g" '/nftables.rules'
-sed -i "s|_DELUGE_PORT_|$DELUGE_PORT|g" '/nftables.rules'
+sed -i "s|_FLOOD_PORT_|$FLOOD_PORT|g" '/nftables.rules'
 
 ### Add rules ###
 echo '[info] Apply rules'
