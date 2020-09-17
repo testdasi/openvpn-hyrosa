@@ -305,7 +305,7 @@ downloading:
     url: "http://127.0.0.1:8080"
     username: null
     password: null
-  saveTorrentsTo: "/data/deluge/watch"
+  saveTorrentsTo: "/data/rtorrent/watch"
   saveNzbsTo: "/data/sabnzbdplus/watch"
   sendMagnetLinks: true
   updateStatuses: true
