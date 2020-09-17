@@ -36,6 +36,7 @@ sed -i "s|https_port = 8090|https_port = $SAB_PORT_B|g" '/root/sabnzbdplus/sabnz
 echo '[info] sabnzbdplus fixed.'
 
 mkdir -p /root/rtorrent/session \
+    && rm -rf /root/rtorrent/session/* \
     && mkdir -p /root/rtorrent/flood_db \
     && cp -n /temp/.rtorrent.rc /root/ \
     && mkdir -p /data/rtorrent/watch \
