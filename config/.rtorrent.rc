@@ -153,5 +153,9 @@ network.scgi.open_port = 127.0.0.1:5000
 #
 #execute = {/bin/bash,-c,/usr/bin/sleep 10s && /usr/bin/php /usr/share/webapps/rutorrent/php/initplugins.php $WEBUI_USER &}
 
-#safe_sync on by default
+# safe_sync on by default
 pieces.sync.always_safe.set=1
+
+# Move files to complete when done
+system.method.set_key = event.download.finished,move_complete,"d.set_directory=/data/rtorrent/complete/;"execute=mv,-n,$d.get_base_path=,/data/rtorrent/complete/"
+
