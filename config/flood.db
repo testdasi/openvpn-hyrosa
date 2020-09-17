@@ -1,0 +1,2 @@
+{"username":"admin","password":"$argon2i$v=19$m=4096,t=3,p=1$RketcqT39YpHQ4XqM0AnRA$bfnM95KAuD2gOmoRCikpPxRtivDDISA313xPi19Uk6E","host":"127.0.0.1","port":"5000","isAdmin":true,"_id":"J7B8taNtygqXT28j"}
+{"$$indexCreated":{"fieldName":"username","unique":true,"sparse":false}}
