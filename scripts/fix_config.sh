@@ -37,16 +37,19 @@ echo '[info] sabnzbdplus fixed.'
 
 mkdir -p /root/rtorrent/session \
     && rm -rf /root/rtorrent/session/* \
-    && mkdir -p /root/rtorrent/flood_db \
     && cp -n /temp/.rtorrent.rc /root/ \
     && mkdir -p /data/rtorrent/watch \
     && mkdir -p /data/rtorrent/incomplete \
     && mkdir -p /data/rtorrent/complete \
     && mkdir -p /data/rtorrent/torrent
+echo '[info] rtorrent fixed.'
+
+mkdir -p /root/rtorrent/flood_db \
+    && cp -n /temp/flood.db /root/rtorrent/flood_db/users.db
 sed -i "s|\.\/server\/db\/|\/root\/rtorrent\/flood_db|g" '/app/flood/config.js'
 sed -i "s|127\.0\.0\.1|0\.0\.0\.0|g" '/app/flood/config.js'
 sed -i "s|3000|$FLOOD_PORT|g" '/app/flood/config.js'
-echo '[info] rtorrent + flood fixed.'
+echo '[info] flood fixed.'
 
 mkdir -p /root/nzbhydra2 \
     && cp -n /temp/nzbhydra.yml /root/nzbhydra2/
