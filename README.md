@@ -6,6 +6,7 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
 * Copy your OpenVPN configuration to the above openvpn subfolder (must include openvpn.ovpn + credentials + certs).
 * Don't forget to map /data in the docker to the host (you can map the parent or individual subfolders depending on needs).
 * Start docker (other apps should configure themselves on first run).
+  * Default login for flood is admin/flood
 
 ## Key features
 1. OpenVPN client to connect to your favourite VPN provider. Full freedom with what you want to do with the ovpn file.
