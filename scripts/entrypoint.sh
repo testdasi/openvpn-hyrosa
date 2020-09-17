@@ -51,11 +51,12 @@ echo ''
 echo "[info] Run sabnzbdplus in background on HTTP port $SAB_PORT_A and HTTPS port $SAB_PORT_B"
 sabnzbdplus --daemon --config-file /root/sabnzbdplus/sabnzbdplus.ini --pidfile /root/sabnzbdplus/sabnzbd.pid
 
-### deluge
+### rtorrent + flood
 echo ''
-echo "[info] Run deluge in background on HTTP port $DELUGE_PORT"
-deluged --quiet --port=58846 --config=/root/deluge-web
-deluge-web --fork --quiet --config=/root/deluge-web
+echo "[info] Run rtorrent and flood in background on port $FLOOD_PORT"
+screen -d -m -fa -S rtorrent /usr/bin/rtorrent
+cd /app/flood \
+    && screen -d -m -fa -S flood npm start
 
 ### nzbhydra2
 echo ''
@@ -79,8 +80,10 @@ do
     echo "[info] tinyproxy PID: $pidlist"
     pidlist=$(cat /root/sabnzbdplus/sabnzbd.pid)
     echo "[info] sabnzbdplus PID: $pidlist"
-    pidlist=$(cat /root/deluge-web/deluged.pid | sed 's/;58846//g')
-    echo "[info] deluge PID: $pidlist"
+    pidlist=$(pidof /usr/bin/rtorrent)
+    echo "[info] rtorrent PID: $pidlist"
+    pidlist=$(pidof npm)
+    echo "[info] flood PID: $pidlist"
     pidlist=$(cat /root/nzbhydra2/nzbhydra2.pid)
     echo "[info] nzbhydra2 PID: $pidlist"
     sleep 3600s
