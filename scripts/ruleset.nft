@@ -16,7 +16,7 @@ add rule ip filter INPUT iifname "eth0" tcp dport _TINYPROXY_PORT_ ct state new,
 add rule ip filter INPUT iifname "eth0" tcp dport _SAB_PORT_A_ ct state new,established counter accept
 add rule ip filter INPUT iifname "eth0" tcp dport _SAB_PORT_B_ ct state new,established counter accept
 add rule ip filter INPUT iifname "eth0" tcp dport _HYDRA_PORT_ ct state new,established counter accept
-add rule ip filter INPUT iifname "eth0" tcp dport _DELUGE_PORT_ ct state new,established counter accept
+add rule ip filter INPUT iifname "eth0" tcp dport _FLOOD_PORT_ ct state new,established counter accept
 add rule ip filter OUTPUT oifname "lo" counter accept
 add rule ip filter OUTPUT oifname "tun0" counter accept
 add rule ip filter OUTPUT ip saddr _ETH0_NET_ ip daddr _ETH0_NET_ counter accept
@@ -31,5 +31,5 @@ add rule ip filter OUTPUT oifname "eth0" tcp sport _TINYPROXY_PORT_ ct state est
 add rule ip filter OUTPUT oifname "eth0" tcp sport _SAB_PORT_A_ ct state established counter accept
 add rule ip filter OUTPUT oifname "eth0" tcp sport _SAB_PORT_B_ ct state established counter accept
 add rule ip filter OUTPUT oifname "eth0" tcp sport _HYDRA_PORT_ ct state established counter accept
-add rule ip filter OUTPUT oifname "eth0" tcp sport _DELUGE_PORT_ ct state established counter accept
+add rule ip filter OUTPUT oifname "eth0" tcp sport _FLOOD_PORT_ ct state established counter accept
 add rule ip filter OUTPUT oifname "eth0" ct state related,established counter accept
