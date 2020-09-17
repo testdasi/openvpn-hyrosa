@@ -36,13 +36,16 @@ sed -i "s|https_port = 8090|https_port = $SAB_PORT_B|g" '/root/sabnzbdplus/sabnz
 echo '[info] sabnzbdplus fixed.'
 
 mkdir -p /root/rtorrent/session \
+    && mkdir -p /root/rtorrent/flood_db \
     && cp -n /temp/.rtorrent.rc /root/ \
     && mkdir -p /data/rtorrent/watch \
     && mkdir -p /data/rtorrent/incomplete \
     && mkdir -p /data/rtorrent/complete \
     && mkdir -p /data/rtorrent/torrent
-sed -i "s|\"port\": 8112|\"port\": $DELUGE_PORT|g" '/root/deluge-web/web.conf'
-echo '[info] deluge fixed.'
+sed -i "s|\.\/server\/db\/|\/root\/rtorrent\/flood_db|g" '/app/flood/config.js'
+sed -i "s|127\.0\.0\.1|0\.0\.0\.0|g" '/app/flood/config.js'
+sed -i "s|3000|$FLOOD_PORT|g" '/app/flood/config.js'
+echo '[info] rtorrent + flood fixed.'
 
 mkdir -p /root/nzbhydra2 \
     && cp -n /temp/nzbhydra.yml /root/nzbhydra2/
