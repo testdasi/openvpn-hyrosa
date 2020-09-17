@@ -1,5 +1,5 @@
 # openvpn-hyrosa
-OpenVPN Client with integrated (NZB)Hydra-rtorrent (Flood GUI)-Sabnzbd (and HTTP + SOCKS5 proxies)
+OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa**bnzbd (and HTTP + SOCKS5 proxies)
 
 ## High-level instructions
 * Create an appdata folder in host and create a openvpn subfolder
@@ -14,7 +14,7 @@ OpenVPN Client with integrated (NZB)Hydra-rtorrent (Flood GUI)-Sabnzbd (and HTTP
 1. Dante for SOCKS5 proxy to your VPN (ip:9118)
 1. Tinyproxy for HTTP proxy to your VPN (ip:8118)
 1. NZBHydra2 (ip:5076)
-1. Deluge (ip:8112)
+1. rTorrent with Flood GUI (ip:3000)
 1. SABnzbdPlus (ip:8080 or ip:8090 for https)
 
 ## Bits and bobs
@@ -27,9 +27,9 @@ OpenVPN Client with integrated (NZB)Hydra-rtorrent (Flood GUI)-Sabnzbd (and HTTP
     * You will need to set each device DNS to the docker IP.
     * Alternatively, you can set your router DHCP to set DNS to the docker IP.
   * SOCKS/HTTP_PROXY_PORT: use these proxies if you want to exit through your VPN. Useful if you need to route other apps (e.g. Sonarr/Radarr) through the same VPN exit.
-  * USENET_HTTP_PORT/USENET_HTTPS_PORT/TORRENT_GUI_PORT/SEARCHER_GUI_PORT: use these to access the GUI of SABnzbdPlus, Deluge and NZBHydra2.
+  * USENET_HTTP_PORT/USENET_HTTPS_PORT/TORRENT_GUI_PORT/SEARCHER_GUI_PORT: use these to access the GUI of SABnzbdPlus, Flood (rTorrent) and NZBHydra2.
   * The docker port mappings map host ports to docker ports. The docker ports are determined by the aforementioned PORT variables. So if you change the docker variables, you should also change the port mappings accordingly.
-* Pre-configured NZBHydra2 will *attempt* drop torrent / nzb files into the respective "black holes", which Deluge / SABnzbdPlus can pick up automagically.
+* Pre-configured NZBHydra2 will *attempt* drop torrent / nzb files into the respective "black holes", which rTorrent / SABnzbdPlus can pick up automagically.
 
 ## Usage
     docker run -d \
@@ -45,23 +45,23 @@ OpenVPN Client with integrated (NZB)Hydra-rtorrent (Flood GUI)-Sabnzbd (and HTTP
         -p 8118:8118/tcp \
         -p 8080:8080/tcp \
         -p 8090:8090/tcp \
-        -p 8112:8112/tcp \
+        -p 3000:3000/tcp \
         -p 5076:5076/tcp \
         -e DNS_SERVER_PORT=53 \
         -e SOCKS_PROXY_PORT=9118 \
         -e HTTP_PROXY_PORT=8118 \
         -e USENET_HTTP_PORT 8080 \
         -e USENET_HTTPS_PORT 8090 \
-        -e TORRENT_GUI_PORT 8112 \
+        -e TORRENT_GUI_PORT 3000 \
         -e SEARCHER_GUI_PORT 5076 \
-        testdasi/openvpn-hydesa:<tag>
+        testdasi/openvpn-hyrosa:<tag>
 
 ## Unraid example
     docker run -d \
         --name='OpenVPN-HyDeSa' \
         --net='bridge' \
         --cap-add=NET_ADMIN \
-        -v '/mnt/user/appdata/openvpn-hydesa':'/config':'rw' \
+        -v '/mnt/user/appdata/openvpn-hyrosa':'/config':'rw' \
         -v '/mnt/user/downloads/':'/data':'rw' \
         -e 'DNS_SERVERS'='127.2.2.2' \
         -e 'HOST_NETWORK'='10.132.6.0/23' \
@@ -71,19 +71,19 @@ OpenVPN Client with integrated (NZB)Hydra-rtorrent (Flood GUI)-Sabnzbd (and HTTP
         -p '8118:8118/tcp' \
         -p '8080:8080/tcp' \
         -p '8090:8090/tcp' \
-        -p '8112:8112/tcp' \
+        -p '3000:3000/tcp' \
         -p '5076:5076/tcp' \
         -e 'DNS_SERVER_PORT'='53' \
         -e 'SOCKS_PROXY_PORT'='9118' \
         -e 'HTTP_PROXY_PORT'='8118' \
         -e 'USENET_HTTP_PORT'='8080' \
         -e 'USENET_HTTPS_PORT'='8090' \
-        -e 'TORRENT_GUI_PORT'='8112' \
+        -e 'TORRENT_GUI_PORT'='3000' \
         -e 'SEARCHER_GUI_PORT'='5076' \
         -e 'LANG'='en_GB.UTF-8' \
         -e TZ="Europe/London" \
         -e HOST_OS="Unraid" \
-        'testdasi/openvpn-hydesa:stable-amd64' 
+        'testdasi/openvpn-hyrosa:stable-amd64' 
 
 ## Notes
 * I code for fun and my personal uses; hence, these niche functionalties that nobody asks for. ;)
