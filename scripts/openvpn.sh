@@ -12,7 +12,7 @@ nft add rule ip filter INPUT  tcp sport $DOT_PORT counter accept
 nft add rule ip filter OUTPUT tcp dport $DOT_PORT counter accept
 
 echo "[info] Connecting to VPN on port $OPENVPN_PORT with proto $OPENVPN_PROTO..."
-openvpn --daemon --cd /config/openvpn --config openvpn.ovpn
+openvpn --daemon --cd /root/openvpn --config openvpn.ovpn
 iphiden=$(dig +short +time=5 +tries=1 myip.opendns.com @208.67.222.222)
 while [[ $iphiden =~ "timed out" ]]
 do 
