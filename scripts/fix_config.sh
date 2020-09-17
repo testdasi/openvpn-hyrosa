@@ -35,13 +35,12 @@ sed -i "s|port = 8080|port = $SAB_PORT_A|g" '/root/sabnzbdplus/sabnzbdplus.ini'
 sed -i "s|https_port = 8090|https_port = $SAB_PORT_B|g" '/root/sabnzbdplus/sabnzbdplus.ini'
 echo '[info] sabnzbdplus fixed.'
 
-mkdir -p /root/deluge-web \
-    && cp -n /temp/deluge.conf /root/deluge-web/core.conf \
-    && cp -n /temp/deluge-web.conf /root/deluge-web/web.conf \
-    && mkdir -p /data/deluge/watch \
-    && mkdir -p /data/deluge/incomplete \
-    && mkdir -p /data/deluge/complete \
-    && mkdir -p /data/deluge/torrent
+mkdir -p /root/rtorrent/session \
+    && cp -n /temp/.rtorrent.rc /root/ \
+    && mkdir -p /data/rtorrent/watch \
+    && mkdir -p /data/rtorrent/incomplete \
+    && mkdir -p /data/rtorrent/complete \
+    && mkdir -p /data/rtorrent/torrent
 sed -i "s|\"port\": 8112|\"port\": $DELUGE_PORT|g" '/root/deluge-web/web.conf'
 echo '[info] deluge fixed.'
 
