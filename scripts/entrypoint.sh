@@ -52,7 +52,7 @@ echo "[info] Run rtorrent and flood in background on port $FLOOD_PORT"
 #screen -d -m -fa -S rtorrent_flood bash /rtorrent_flood.sh
 screen -d -m -fa -S rtorrent /usr/bin/rtorrent
 cd /app/flood \
-    && screen -d -m -fa -S flood npm start
+    && screen -d -m -fa -S flood npm start &> /dev/null
 
 ### nzbhydra2
 echo ''
@@ -132,7 +132,7 @@ do
     then
         echo '[warn] flood crashed, restarting'
         cd /app/flood \
-            && screen -d -m -fa -S flood npm start
+            && screen -d -m -fa -S flood npm start &> /dev/null
     else
         echo "[info] flood PID: $pidlist"
     fi
