@@ -27,3 +27,8 @@ sed -i "s|_FLOOD_PORT_|$FLOOD_PORT|g" '/nftables.rules'
 echo '[info] Apply rules'
 nft -f /nftables.rules
 rm /nftables.rules
+
+### Quick block test ####
+echo ''
+ipttest=$(dig +short +time=5 +tries=1 myip.opendns.com @208.67.222.222)
+echo "[info] Quick block test. Expected result is time out. Actual result is $ipttest"
