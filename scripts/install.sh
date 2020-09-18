@@ -8,5 +8,9 @@ mkdir -p /temp \
     && rm -f /temp/static.zip \
     && mv /temp/static-master /static
 
+# Fix static scripts
+sed -i "s|\/config\/openvpn|\/root\/openvpn|g" '/static/scripts/openvpn.sh'
+sed -i "s|\/config\/openvpn|\/root\/openvpn|g" '/static/scripts/set_variables_ovpn_port_proto.sh'
+
 # chmod scripts
 chmod +x /*.sh
