@@ -1,5 +1,5 @@
 # openvpn-hyrosa
-OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa**bnzbd (and HTTP + SOCKS5 proxies).
+OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od WebUI)-**Sa**bnzbd (and HTTP + SOCKS5 proxies).
 
 ## High-level instructions
 * Create an appdata folder in host and create a openvpn subfolder
@@ -15,15 +15,15 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
 1. Dante for SOCKS5 proxy to your VPN (ip:9118)
 1. Tinyproxy for HTTP proxy to your VPN (ip:8118)
 1. NZBHydra2 (ip:5076)
-1. rTorrent with Flood GUI (ip:3000)
+1. rTorrent with Flood WebUI (ip:3000)
 1. SABnzbdPlus (ip:8080 or ip:8090 for https)
-1. A quick WebGUI launcher (ip:8000) to quickly access the trio of apps above (or as always, just go directly to each app).
+1. A quick WebUI launcher (ip:8000) to quickly access the trio of apps above (or as always, just go directly to each app).
 
 ## Bits and bobs
 * OpenVPN config files MUST be named openvpn.ovpn. The certs and credentials can be included in the config file or split into separate files. The flexibility is yours.
 * Explaining the parameters (the values you see in Usage section are default values)
   * SERVER_IP: IP of the docker host (if bridge network) or the static IP you give to the docker (if macvlan bridge e.g. Unraid br0 / br1)
-  * LAUNCHER_GUI_PORT: the GUI quick launcher is accessible at SERVER_IP:LAUNCHER_GUI_PORT.
+  * LAUNCHER_GUI_PORT: the WebUI quick launcher is accessible at SERVER_IP:LAUNCHER_GUI_PORT.
   * DNS_SERVERS: set to 127.2.2.2 will point to stubby (which in turn points to Google / Cloudflare DoT services). Your DNS queries out of the VPN exit will also be encrypted before arriving at Google / Cloudflare for even more privacy. Change it to other comma-separated IPs (e.g. 1.1.1.1,8.8.8.8) will use normal unencrypted DNS, or perhaps a pihole in the local network.
   * HOST_NETWORK: to enable free flow between host network and the docker (e.g. when using docker bridge network). Otherwise, your proxies will only work from within the docker network. Must be in CIDR format e.g. 192.168.1.0/24
   * DNS_SERVER_PORT: the docker will serve as a DNS server for the local network so everything, including DNS, comes out of the VPN exit.
@@ -33,7 +33,7 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
   * SOCKS/HTTP_PROXY_PORT: use these proxies if you want to exit through your VPN. Useful if you need to route other apps (e.g. Sonarr/Radarr) through the same VPN exit.
   * USENET_HTTP_PORT/USENET_HTTPS_PORT/TORRENT_GUI_PORT/SEARCHER_GUI_PORT: use these to access the GUI of SABnzbdPlus, Flood (rTorrent) and NZBHydra2.
   * The docker port mappings map host ports to docker ports. The docker ports are determined by the aforementioned PORT variables. So if you change the docker variables, you should also change the port mappings accordingly.
-    * There is a quirk with the Web GUI quick launcher. On bridge network (i.e. no static IP), if you want to change the port mapping of NZBHydra2 / Flood / Sabnzbd, please change the ENV variable + the container port + the mapped host port to the same value.
+    * There is a quirk with the WebUI quick launcher. On bridge network (i.e. no static IP), if you want to change the port mapping of NZBHydra2 / Flood / Sabnzbd, please change the ENV variable + the container port + the mapped host port to the same value.
 * Pre-configured NZBHydra2 will *attempt* drop torrent / nzb files into the respective "black holes", which rTorrent / SABnzbdPlus can pick up automagically.
 
 ## Usage
