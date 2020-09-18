@@ -15,5 +15,5 @@ do
         && screen -d -m -fa -S flood npm start
     fi
     
-    sleep 60s
+    sleep 600s
 done
