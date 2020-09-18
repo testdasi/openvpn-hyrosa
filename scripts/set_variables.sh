@@ -2,6 +2,7 @@
 
 ### DNS and DoT ports are fixed ###
 echo '[info] Set various ports to docker variables'
+LAUNCHER_PORT=${SERVER_IP}
 DNS_PORT=${DNS_SERVER_PORT}
 DANTE_PORT=${SOCKS_PROXY_PORT}
 TINYPROXY_PORT=${HTTP_PROXY_PORT}
