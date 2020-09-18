@@ -1,5 +1,5 @@
 # openvpn-hyrosa
-OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa**bnzbd (and HTTP + SOCKS5 proxies)
+OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa**bnzbd (and HTTP + SOCKS5 proxies).
 
 ## High-level instructions
 * Create an appdata folder in host and create a openvpn subfolder
@@ -21,6 +21,8 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
 ## Bits and bobs
 * OpenVPN config files MUST be named openvpn.ovpn. The certs and credentials can be included in the config file or split into separate files. The flexibility is yours.
 * Explaining the parameters (the values you see in Usage section are default values)
+  * SERVER_IP: IP of the docker host (if bridge network) or the static IP you give to the docker (if macvlan bridge e.g. Unraid br0 / br1)
+  * LAUNCHER_GUI_PORT: the GUI quick launcher is accessible at SERVER_IP:LAUNCHER_GUI_PORT
   * DNS_SERVERS: set to 127.2.2.2 will point to stubby (which in turn points to Google / Cloudflare DoT services). Your DNS queries out of the VPN exit will also be encrypted before arriving at Google / Cloudflare for even more privacy. Change it to other comma-separated IPs (e.g. 1.1.1.1,8.8.8.8) will use normal unencrypted DNS, or perhaps a pihole in the local network.
   * HOST_NETWORK: to enable free flow between host network and the docker (e.g. when using docker bridge network). Otherwise, your proxies will only work from within the docker network. Must be in CIDR format e.g. 192.168.1.0/24
   * DNS_SERVER_PORT: the docker will serve as a DNS server for the local network so everything, including DNS, comes out of the VPN exit.
@@ -40,6 +42,8 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
         -v <host path for data>:/data \
         -e DNS_SERVERS=127.2.2.2 \
         -e HOST_NETWORK=192.168.1.0/24 \
+        -e SERVER_IP=192.168.1.1 \
+        -p 8000:8000/tcp \
         -p 53:53/tcp \
         -p 53:53/udp \
         -p 9118:9118/tcp \
@@ -48,6 +52,7 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
         -p 8090:8090/tcp \
         -p 3000:3000/tcp \
         -p 5076:5076/tcp \
+        -e LAUNCHER_GUI_PORT=8000 \
         -e DNS_SERVER_PORT=53 \
         -e SOCKS_PROXY_PORT=9118 \
         -e HTTP_PROXY_PORT=8118 \
@@ -66,6 +71,8 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
         -v '/mnt/user/downloads/':'/data':'rw' \
         -e 'DNS_SERVERS'='127.2.2.2' \
         -e 'HOST_NETWORK'='192.168.1.0/24' \
+        -e 'SERVER_IP'='192.168.1.1' \
+        -p '8000:8000/tcp' \
         -p '8153:53/tcp' \
         -p '8153:53/udp' \
         -p '9118:9118/tcp' \
@@ -74,6 +81,7 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
         -p '8090:8090/tcp' \
         -p '3000:3000/tcp' \
         -p '5076:5076/tcp' \
+        -e 'LAUNCHER_GUI_PORT'='8000' \
         -e 'DNS_SERVER_PORT'='53' \
         -e 'SOCKS_PROXY_PORT'='9118' \
         -e 'HTTP_PROXY_PORT'='8118' \
