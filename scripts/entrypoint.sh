@@ -87,7 +87,7 @@ do
         echo '[warn] openvpn crashed, restarting'
         source /static/scripts/openvpn.sh
     else
-        echo "[info] OpenVPN PID: $pidlist"
+        echo "[info] openvpn PID: $pidlist"
     fi
     
     pidlist=$(pidof danted)
