@@ -3,6 +3,9 @@
 update-locale LANG=$LANG
 echo '[info] language fixed.'
 
+sed -i "s|\/config\/openvpn|\/root\/openvpn|g" '/static/scripts/openvpn.sh'
+echo '[info] static scripts fixed.'
+
 mkdir -p /root/.getdns \
     && cp -n /static/config/.profile /root/ \
     && cp -n /static/config/.bashrc /root/ \
