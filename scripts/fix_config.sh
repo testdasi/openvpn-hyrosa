@@ -56,3 +56,10 @@ mkdir -p /root/nzbhydra2 \
 sed -i "s|port: 5076|port: $HYDRA_PORT|g" '/root/nzbhydra2/nzbhydra.yml'
 sed -i "s|127\.0\.0\.1:8080|127\.0\.0\.1:$SAB_PORT_A|g" '/root/nzbhydra2/nzbhydra.yml'
 echo '[info] nzbhydra2 fixed.'
+
+cp -f /static/config/index.html /app/launcher/
+sed -i "s|192.168.1.1|$LAUNCHER_PORT|g" '/app/launcher/index.html'
+sed -i "s|:8080|:$SAB_PORT_A|g" '/app/launcher/index.html'
+sed -i "s|:5076|:$HYDRA_PORT|g" '/app/launcher/index.html'
+sed -i "s|:3000|:$FLOOD_PORT|g" '/app/launcher/index.html'
+echo '[info] launcher fixed.'
