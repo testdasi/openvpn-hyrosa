@@ -86,7 +86,7 @@ do
     echo "[info] flood PID: $pidlist"
     pidlist=$(cat /root/nzbhydra2/nzbhydra2.pid)
     echo "[info] nzbhydra2 PID: $pidlist"
-    pidlist=$(pidof /app/launcher/launcher-python3.sh)
+    pidlist=$(pidof python3)
     echo "[info] GUI launcher PID: $pidlist"
     sleep 3600s
 done
