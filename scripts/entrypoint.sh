@@ -49,7 +49,10 @@ sabnzbdplus --daemon --config-file /root/sabnzbdplus/sabnzbdplus.ini --pidfile /
 ### rtorrent + flood
 echo ''
 echo "[info] Run rtorrent and flood in background on port $FLOOD_PORT"
-screen -d -m -fa -S rtorrent_flood bash /rtorrent_flood.sh
+#screen -d -m -fa -S rtorrent_flood bash /rtorrent_flood.sh
+screen -d -m -fa -S rtorrent /usr/bin/rtorrent
+cd /app/flood \
+    && screen -d -m -fa -S flood npm start
 
 ### nzbhydra2
 echo ''
@@ -58,7 +61,7 @@ echo "[info] Run nzbhydra2 in background on port $HYDRA_PORT"
 
 ### GUI launcher
 echo ''
-echo "[info] Run GUI launcher in background at $LAUNCHER_IP:$LAUNCHER_PORT"
+echo "[info] Run WebUI launcher in background at $LAUNCHER_IP:$LAUNCHER_PORT"
 screen -d -m -fa -S launcher /app/launcher/launcher-python3.sh
 
 ### Infinite loop to stop docker from stopping ###
@@ -68,23 +71,90 @@ do
     echo ''
     iphiden=$(dig +short myip.opendns.com @208.67.222.222)
     echo "[info] Your VPN public IP is $iphiden"
-    pidlist=$(pidof openvpn)
-    echo "[info] OpenVPN PID: $pidlist"
+    
     pidlist=$(pidof stubby)
-    echo "[info] stubby PID: $pidlist"
+    if [ -z "$pidlist" ]
+    then
+        echo '[warn] stubby crashed, restarting'
+        stubby -g -C /root/stubby/stubby.yml
+    else
+        echo "[info] stubby PID: $pidlist"
+    fi
+    
+    pidlist=$(pidof openvpn)
+    if [ -z "$pidlist" ]
+    then
+        echo '[warn] openvpn crashed, restarting'
+        source /static/scripts/openvpn.sh
+    else
+        echo "[info] OpenVPN PID: $pidlist"
+    fi
+    
     pidlist=$(pidof danted)
-    echo "[info] danted PID: $pidlist"
+    if [ -z "$pidlist" ]
+    then
+        echo '[warn] danted crashed, restarting'
+        danted -D -f /root/dante/danted.conf
+    else
+        echo "[info] danted PID: $pidlist"
+    fi
+    
     pidlist=$(pidof tinyproxy)
-    echo "[info] tinyproxy PID: $pidlist"
-    pidlist=$(cat /root/sabnzbdplus/sabnzbd.pid)
-    echo "[info] sabnzbdplus PID: $pidlist"
-    pidlist=$(pidof /usr/bin/rtorrent)
-    echo "[info] rtorrent PID: $pidlist"
+    if [ -z "$pidlist" ]
+    then
+        echo '[warn] tinyproxy crashed, restarting'
+        tinyproxy -c /root/tinyproxy/tinyproxy.conf
+    else
+        echo "[info] tinyproxy PID: $pidlist"
+    fi
+    
+    #pidlist=$(cat /root/sabnzbdplus/sabnzbd.pid)
+    pidlist=$(pidof python2)
+    if [ -z "$pidlist" ]
+    then
+        echo '[warn] sabnzbdplus crashed, restarting'
+        sabnzbdplus --daemon --config-file /root/sabnzbdplus/sabnzbdplus.ini --pidfile /root/sabnzbdplus/sabnzbd.pid
+    else
+        echo "[info] sabnzbdplus PID: $pidlist"
+    fi
+    
+    pidlist=$(pidof rtorrent)
+    if [ -z "$pidlist" ]
+    then
+        echo '[warn] rtorrent crashed, restarting'
+        screen -d -m -fa -S rtorrent /usr/bin/rtorrent
+    else
+        echo "[info] rtorrent PID: $pidlist"
+    fi
+    
     pidlist=$(pidof npm)
-    echo "[info] flood PID: $pidlist"
-    pidlist=$(cat /root/nzbhydra2/nzbhydra2.pid)
-    echo "[info] nzbhydra2 PID: $pidlist"
+    if [ -z "$pidlist" ]
+    then
+        echo '[warn] flood crashed, restarting'
+        cd /app/flood \
+            && screen -d -m -fa -S flood npm start
+    else
+        echo "[info] flood PID: $pidlist"
+    fi
+    
+    #pidlist=$(cat /root/nzbhydra2/nzbhydra2.pid)
+    pidlist=$(pidof nzbhydra2)
+    if [ -z "$pidlist" ]
+    then
+        echo '[warn] nzbhydra2 crashed, restarting'
+        /app/nzbhydra2/nzbhydra2 --daemon --nobrowser --java /usr/lib/jvm/java-11-openjdk-amd64/bin/java --datafolder /root/nzbhydra2 --pidfile /root/nzbhydra2/nzbhydra2.pid
+    else
+        echo "[info] nzbhydra2 PID: $pidlist"
+    fi
+    
     pidlist=$(pidof python3)
-    echo "[info] GUI launcher PID: $pidlist"
-    sleep 3600s
+    if [ -z "$pidlist" ]
+    then
+        echo '[warn] WebUI launcher crashed, restarting'
+        screen -d -m -fa -S launcher /app/launcher/launcher-python3.sh
+    else
+        echo "[info] WebUI launcher PID: $pidlist"
+    fi
+    
+    sleep 600s
 done
