@@ -12,5 +12,6 @@ HYDRA_PORT=${SEARCHER_GUI_PORT}
 # DoT port is fixed due to TLS protocol
 DOT_PORT=853
 
+### static scripts ###
 source /static/scripts/set_variables_ovpn_port_proto.sh
 source /static/scripts/set_variables_eth0.sh
