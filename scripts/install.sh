@@ -13,5 +13,9 @@ sed -i "s|\/data\/deluge\/watch|\/data\/rtorrent\/watch|g" '/static/config/nzbhy
 sed -i "s|\/config\/openvpn|\/root\/openvpn|g" '/static/scripts/openvpn.sh'
 sed -i "s|\/config\/openvpn|\/root\/openvpn|g" '/static/scripts/set_variables_ovpn_port_proto.sh'
 
+# overwrite static with repo-specific stuff
+cp -f /temp/* /static/config/ \
+    && rm -rf /temp
+
 # chmod scripts
 chmod +x /*.sh
