@@ -8,7 +8,8 @@ mkdir -p /temp \
     && rm -f /temp/static.zip \
     && mv /temp/static-master /static
 
-# fix static scripts for repo-specific stuff
+# fix static files for repo-specific stuff
+sed -i "s|\/data\/deluge\/watch|\/data\/rtorrent\/watch|g" '/static/config/nzbhydra.yml'
 sed -i "s|\/config\/openvpn|\/root\/openvpn|g" '/static/scripts/openvpn.sh'
 sed -i "s|\/config\/openvpn|\/root\/openvpn|g" '/static/scripts/set_variables_ovpn_port_proto.sh'
 
