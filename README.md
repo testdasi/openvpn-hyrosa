@@ -17,6 +17,7 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
 1. NZBHydra2 (ip:5076)
 1. rTorrent with Flood GUI (ip:3000)
 1. SABnzbdPlus (ip:8080 or ip:8090 for https)
+1. A quick WebGUI launcher (ip:8000)
 
 ## Bits and bobs
 * OpenVPN config files MUST be named openvpn.ovpn. The certs and credentials can be included in the config file or split into separate files. The flexibility is yours.
