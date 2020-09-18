@@ -49,7 +49,7 @@ sabnzbdplus --daemon --config-file /root/sabnzbdplus/sabnzbdplus.ini --pidfile /
 ### rtorrent + flood
 echo ''
 echo "[info] Run rtorrent and flood in background on port $FLOOD_PORT"
-screen -d -m -fa -S rtorrent_flood bash rtorrent_flood.sh
+screen -d -m -fa -S rtorrent_flood bash /rtorrent_flood.sh
 
 ### nzbhydra2
 echo ''
