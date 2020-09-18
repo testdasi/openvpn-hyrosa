@@ -33,7 +33,7 @@ echo "[info] Quick block test. Expected result is time out. Actual result is $ip
 ### OpenVPN ###
 echo ''
 echo "[info] Setting up OpenVPN tunnel"
-source /openvpn.sh
+source /static/scripts/openvpn.sh
 echo '[info] Done'
 
 ### Dante SOCKS proxy to VPN ###
