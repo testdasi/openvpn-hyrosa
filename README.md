@@ -43,7 +43,7 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
         -v <host path for data>:/data \
         -e DNS_SERVERS=127.2.2.2 \
         -e HOST_NETWORK=192.168.1.0/24 \
-        -e SERVER_IP=192.168.1.1 \
+        -e SERVER_IP=192.168.1.2 \
         -p 8000:8000/tcp \
         -p 53:53/tcp \
         -p 53:53/udp \
@@ -72,7 +72,7 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
         -v '/mnt/user/downloads/':'/data':'rw' \
         -e 'DNS_SERVERS'='127.2.2.2' \
         -e 'HOST_NETWORK'='192.168.1.0/24' \
-        -e 'SERVER_IP'='192.168.1.1' \
+        -e 'SERVER_IP'='192.168.1.2' \
         -p '8000:8000/tcp' \
         -p '8153:53/tcp' \
         -p '8153:53/udp' \
