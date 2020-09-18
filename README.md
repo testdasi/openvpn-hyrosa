@@ -33,6 +33,7 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
   * SOCKS/HTTP_PROXY_PORT: use these proxies if you want to exit through your VPN. Useful if you need to route other apps (e.g. Sonarr/Radarr) through the same VPN exit.
   * USENET_HTTP_PORT/USENET_HTTPS_PORT/TORRENT_GUI_PORT/SEARCHER_GUI_PORT: use these to access the GUI of SABnzbdPlus, Flood (rTorrent) and NZBHydra2.
   * The docker port mappings map host ports to docker ports. The docker ports are determined by the aforementioned PORT variables. So if you change the docker variables, you should also change the port mappings accordingly.
+    * There is a quirk with the Web GUI quick launcher. On bridge network (i.e. no static IP), if you want to change the port mapping of NZBHydra2 / Flood / Sabnzbd, please change the ENV variable + the container port + the mapped host port to the same value.
 * Pre-configured NZBHydra2 will *attempt* drop torrent / nzb files into the respective "black holes", which rTorrent / SABnzbdPlus can pick up automagically.
 
 ## Usage
