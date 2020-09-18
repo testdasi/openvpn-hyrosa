@@ -17,13 +17,13 @@ OpenVPN Client with integrated (NZB)**Hy**dra-**r**Torrent (Fl**o**od GUI)-**Sa*
 1. NZBHydra2 (ip:5076)
 1. rTorrent with Flood GUI (ip:3000)
 1. SABnzbdPlus (ip:8080 or ip:8090 for https)
-1. A quick WebGUI launcher (ip:8000)
+1. A quick WebGUI launcher (ip:8000) to quickly access the trio of apps above (or as always, just go directly to each app).
 
 ## Bits and bobs
 * OpenVPN config files MUST be named openvpn.ovpn. The certs and credentials can be included in the config file or split into separate files. The flexibility is yours.
 * Explaining the parameters (the values you see in Usage section are default values)
   * SERVER_IP: IP of the docker host (if bridge network) or the static IP you give to the docker (if macvlan bridge e.g. Unraid br0 / br1)
-  * LAUNCHER_GUI_PORT: the GUI quick launcher is accessible at SERVER_IP:LAUNCHER_GUI_PORT
+  * LAUNCHER_GUI_PORT: the GUI quick launcher is accessible at SERVER_IP:LAUNCHER_GUI_PORT.
   * DNS_SERVERS: set to 127.2.2.2 will point to stubby (which in turn points to Google / Cloudflare DoT services). Your DNS queries out of the VPN exit will also be encrypted before arriving at Google / Cloudflare for even more privacy. Change it to other comma-separated IPs (e.g. 1.1.1.1,8.8.8.8) will use normal unencrypted DNS, or perhaps a pihole in the local network.
   * HOST_NETWORK: to enable free flow between host network and the docker (e.g. when using docker bridge network). Otherwise, your proxies will only work from within the docker network. Must be in CIDR format e.g. 192.168.1.0/24
   * DNS_SERVER_PORT: the docker will serve as a DNS server for the local network so everything, including DNS, comes out of the VPN exit.
