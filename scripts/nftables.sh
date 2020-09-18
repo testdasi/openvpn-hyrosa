@@ -1,12 +1,5 @@
 #!/bin/bash
 
-### Flusing ruleset and add missing route ###
-echo '[info] Flusing ruleset'
-nft flush ruleset
-add_route="$(ip route | grep 'default')" ; add_route="$(sed "s|default|$HOST_NETWORK|g" <<< $add_route)"
-ip route add $add_route
-echo "[info] Added route $add_route"
-
 ### Editing ruleset ###
 echo '[info] Editing base ruleset'
 rm -f /nftables.rules
@@ -23,12 +16,6 @@ sed -i "s|_SAB_PORT_B_|$SAB_PORT_B|g" '/nftables.rules'
 sed -i "s|_HYDRA_PORT_|$HYDRA_PORT|g" '/nftables.rules'
 sed -i "s|_FLOOD_PORT_|$FLOOD_PORT|g" '/nftables.rules'
 
-### Add rules ###
-echo '[info] Apply rules'
-nft -f /nftables.rules
-rm /nftables.rules
-
-### Quick block test ####
-echo ''
-ipttest=$(dig +short +time=5 +tries=1 myip.opendns.com @208.67.222.222)
-echo "[info] Quick block test. Expected result is time out. Actual result is $ipttest"
+### static scripts ###
+source /static/scripts/nftables_apply.sh
+source /static/scripts/nftables_quick_block_test.sh
