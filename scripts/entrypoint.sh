@@ -53,10 +53,8 @@ then
     ### rtorrent + flood
     echo ''
     echo "[info] Run rtorrent and flood in background on port $FLOOD_PORT"
-    #screen -d -m -fa -S rtorrent_flood bash /rtorrent_flood.sh
     screen -d -m -fa -S rtorrent /usr/bin/rtorrent
-    cd /app/flood \
-        && screen -d -m -fa -S flood npm start &> /dev/null
+    start-stop-daemon --start --background --name flood --chdir /app/flood --exec /app/flood/flood.sh
 
     ### nzbhydra2
     echo ''
@@ -146,8 +144,7 @@ then
         then
             echo '[warn] flood crashed, restarting'
             crashed=$(( $crashed + 1 ))
-            cd /app/flood \
-                && screen -d -m -fa -S flood npm start &> /dev/null
+            start-stop-daemon --start --background --name flood --chdir /app/flood --exec /app/flood/flood.sh
         else
             echo "[info] flood PID: $pidlist"
         fi
