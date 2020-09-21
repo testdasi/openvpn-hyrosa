@@ -24,5 +24,9 @@ sed -i "s|\/etc\/|\/root\/|g" '/static/scripts/fix_config_rtorrent.sh'
 sed -i "s|\/etc\/|\/root\/|g" '/static/scripts/fix_config_flood.sh'
 sed -i "s|\/etc\/|\/root\/|g" '/static/scripts/fix_config_nzbhydra2.sh'
 
+# flood.sh
+mv -f /static/config/flood.sh /app/flood/ \
+    && chmod +x /app/flood/flood.sh
+
 # chmod scripts
 chmod +x /*.sh
