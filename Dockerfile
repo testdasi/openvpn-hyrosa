@@ -36,6 +36,8 @@ RUN /bin/bash /install.sh \
 
 VOLUME ["/root"]
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["tini", "--", "/entrypoint.sh"]
+
+HEALTHCHECK CMD /healthcheck.sh
 
 RUN echo "$(date "+%d.%m.%Y %T") Built from ${FRM} with tag ${TAG}" >> /build_date.info
