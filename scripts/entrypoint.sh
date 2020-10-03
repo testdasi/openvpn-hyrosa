@@ -66,33 +66,14 @@ then
     echo "[info] Run WebUI launcher in background at $LAUNCHER_IP:$LAUNCHER_PORT"
     start-stop-daemon --start --background --name launcher --chdir /app/launcher --exec /app/launcher/launcher-python3.sh
 
-    ### Infinite loop to stop docker from stopping ###
-    sleep_time=10
-    crashed=0
+    ### Periodically checking IP ###
+    sleep_time=3600
+    echo ''
     while true
     do
-        echo ''
-        echo "[info] Wait $sleep_time seconds before next healthcheck..."
-        sleep $sleep_time
-        
         iphiden=$(dig +short myip.opendns.com @208.67.222.222)
         echo "[info] Your VPN public IP is $iphiden"
-        
-        source /static/scripts/pid-check.sh
-        
-        # reset wait time if something crashed, otherwise double the wait time till next healthcheck
-        if (( $crashed > 0 ))
-        then
-            sleep_time=$(( $crashed * 10 ))
-            crashed=0
-        else
-            sleep_time=$(( $sleep_time * 2 ))
-            # restrict wait time to within 3600s i.e. 1hr
-            if (( $sleep_time > 360 ))
-            then
-                sleep_time=360
-            fi
-        fi
+        sleep $sleep_time
     done
 else
     echo '[CRITICAL] Config file not found, quitting...'
